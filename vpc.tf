@@ -8,25 +8,44 @@ resource "aws_vpc" "vpc" {
     }
 }
 
-# パブリックサブネット
-resource "aws_subnet" "public_subnet" {
+# パブリックサブネット1a
+resource "aws_subnet" "public_subnet_1a" {
     availability_zone = "ap-northeast-1a"
     cidr_block        = "10.0.0.0/24"
-    # サブネットで起動したインスタンスにパブリックIPを許可する
     map_public_ip_on_launch = true
     tags = {
-        "Name" = "public_subnet"
+        "Name" = "public-subnet-1a"
     }
     vpc_id = aws_vpc.vpc.id
 }
 
-# プライベートサブネット
-resource "aws_subnet" "private_subnet" {
-    availability_zone       = "ap-northeast-1a"
-    cidr_block              = "10.0.1.0/24"
+# パブリックサブネット1c
+resource "aws_subnet" "public_subnet_1c" {
+    availability_zone = "ap-northeast-1c"
+    cidr_block        = "10.0.1.0/24"
     map_public_ip_on_launch = true
     tags = {
-        "Name" = "private_subnet"
+        "Name" = "public-subnet-1c"
+    }
+    vpc_id = aws_vpc.vpc.id
+}
+
+# プライベートサブネット1a
+resource "aws_subnet" "private_subnet_1a" {
+    availability_zone       = "ap-northeast-1a"
+    cidr_block              = "10.0.2.0/24"
+    tags = {
+        "Name" = "private-subnet-1a"
+    }
+    vpc_id = aws_vpc.vpc.id
+}
+
+# プライベートサブネット1c
+resource "aws_subnet" "private_subnet_1c" {
+    availability_zone       = "ap-northeast-1c"
+    cidr_block              = "10.0.3.0/24"
+    tags = {
+        "Name" = "private-subnet-1c"
     }
     vpc_id = aws_vpc.vpc.id
 }
@@ -53,7 +72,12 @@ resource "aws_route_table" "public_subnet_route_table" {
 
 # ルートテーブルをパブリックサブネットに紐付け
 # これでパブリックサブネットが外部に公開された状態に
-resource "aws_route_table_association" "public_subnet_association" {
+resource "aws_route_table_association" "public_subnet_1a_association" {
   route_table_id = aws_route_table.public_subnet_route_table.id
-  subnet_id      = aws_subnet.public_subnet.id
+  subnet_id      = aws_subnet.public_subnet_1a.id
+}
+
+resource "aws_route_table_association" "public_subnet_1c_association" {
+  route_table_id = aws_route_table.public_subnet_route_table.id
+  subnet_id      = aws_subnet.public_subnet_1c.id
 }
