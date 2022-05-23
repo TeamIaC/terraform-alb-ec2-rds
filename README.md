@@ -17,7 +17,7 @@ SSH接続する
 ssh -i example ec2-user@<Public IP>
 ```
 
-RDSに接続する(:3306)
+RDSに接続する(:3306いらない)
 ```
 mysql –h <RDSエンドポイント> -u admin –p
 ```
