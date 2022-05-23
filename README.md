@@ -1,5 +1,7 @@
 # terraform-alb-ec2-rds
 
+![alb-ec2-rds](https://user-images.githubusercontent.com/73768462/169782871-a8281a90-dc00-405b-8cea-aeb3b5473a66.png)
+
 鍵を生成する
 ```
 ssh-keygen -t rsa -f example -N ''
